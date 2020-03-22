@@ -39,8 +39,6 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
     public static final int REQUEST_CODE_BRISANJE=1;
     ArrayList<Golub> listaGolubova;
     ImageButton add;
-    ImageButton delete;
-    ImageButton update;
     ListView listView;
     MySQLiteHelper db;
     EditText etPretraga;
@@ -91,11 +89,7 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
             }
         });
         add = view.findViewById(R.id.imageButton4);
-        delete= view.findViewById(R.id.imageButton5);
-        update= view.findViewById(R.id.imageButton6);
         add.setOnClickListener(this);
-        delete.setOnClickListener(this);
-        update.setOnClickListener(this);
 
         db= new MySQLiteHelper(getActivity());
         listView= view.findViewById(R.id.listView);
@@ -128,10 +122,7 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
                 Intent intent= new Intent(getActivity(), DodajGoluba.class);
                 startActivity(intent);
                 break;
-            case R.id.imageButton5:
-                break;
-            case R.id.imageButton6:
-                break;
+
         }
 
     }

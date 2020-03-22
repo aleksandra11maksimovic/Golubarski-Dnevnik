@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import elab3.com.golubarskidnevnik.MySQLiteHelper;
 import elab3.com.golubarskidnevnik.R;
 
@@ -88,13 +90,28 @@ public class DodajGoluba extends Activity{
     public void dodajGoluba(){
         MySQLiteHelper db= new MySQLiteHelper(this);
         String pol="n";
+        if(brojAlke.getText().toString()==""){
+            Toast.makeText(this, "Unesite broj alke",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(db.dajSveGolubove(" WHERE id='"+brojAlke.getText().toString()+"'").size()>0){
+            Toast.makeText(this,"Već postoji golub sa ovom alkom, promenite broj alke",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(bojaAlke.getText().toString()==""){
+            Toast.makeText(this, "Unesite boju alke",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(rg.getCheckedRadioButtonId()==0){
             pol="m";
         }else{
             pol="z";
         }
 
-
+        if(pol=="n"){
+            Toast.makeText(this, "Niste odabrali pol, boju i dodatak",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Golub golub=new Golub(brojAlke.getText().toString(), spinner.getSelectedItem().toString(),
                 spinner2.getSelectedItem().toString(),
                 bojaAlke.getText().toString(),
