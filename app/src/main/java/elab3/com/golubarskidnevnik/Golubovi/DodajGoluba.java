@@ -90,7 +90,7 @@ public class DodajGoluba extends Activity{
     public void dodajGoluba(){
         MySQLiteHelper db= new MySQLiteHelper(this);
         String pol="n";
-        if(brojAlke.getText().toString()==""){
+        if(brojAlke.getText().toString().equals("")){
             Toast.makeText(this, "Unesite broj alke",Toast.LENGTH_SHORT).show();
             return;
         }
@@ -98,20 +98,22 @@ public class DodajGoluba extends Activity{
             Toast.makeText(this,"Već postoji golub sa ovom alkom, promenite broj alke",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(bojaAlke.getText().toString()==""){
+        if(bojaAlke.getText().toString().equals("")){
             Toast.makeText(this, "Unesite boju alke",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(rg.getCheckedRadioButtonId()==-1){
+            Toast.makeText(this, "Niste odabrali pol, boju i dodatak",Toast.LENGTH_SHORT).show();
             return;
         }
         if(rg.getCheckedRadioButtonId()==0){
             pol="m";
-        }else{
+        }else {
             pol="z";
         }
 
-        if(pol=="n"){
-            Toast.makeText(this, "Niste odabrali pol, boju i dodatak",Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         Golub golub=new Golub(brojAlke.getText().toString(), spinner.getSelectedItem().toString(),
                 spinner2.getSelectedItem().toString(),
                 bojaAlke.getText().toString(),
