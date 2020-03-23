@@ -21,8 +21,8 @@ public class DodajGoluba extends Activity{
     RadioGroup pol;
     EditText bojaAlke;
     EditText brojAlke;
-    String[] muzjaci = { "Mavijan", "Arap", "Darčin", "Boz", "Bakarlija","Šećerlija","Šeš","Beaz","Karudijan","Kulan","Salicer","Telebon","Barak","Kaplan","Krzal","Čapar","Krzal Boz"};
-    String[] zenke = { "Mavijanka", "Arapka", "Darčinka", "Boska", "Bakarlinka","Šećerlinka","Šeška","Beazka","Karudijanka","Kulanka","Salicerka","Telebonka","Barka","Kaplanka","Krzalka","Čaparka","Krzal Boska"};
+    String[] muzjaci = { "Mavijan", "Arap", "Darčin", "Boz", "Bakarlija","Šećerlija","Šeš","Beaz","Karuđan","Kulan","Salicer","Telebon","Barak","Kaplan","Krzal","Čapar","Krzal Boz","Silber","Naudijan"};
+    String[] zenke = { "Mavijanka", "Arapka", "Darčinka", "Boska", "Bakarlinka","Šećerlinka","Šeška","Beazka","Karuđanka","Kulanka","Salicerka","Telebonka","Barka","Kaplanka","Krzalka","Čaparka","Krzal Boska","Silberka","Naudijanka"};
     String[] dodatak = { "Duz","Špic","Jednošpic"};
     RadioGroup rg;
     Button dodaj;
@@ -107,7 +107,7 @@ public class DodajGoluba extends Activity{
             Toast.makeText(this, "Niste odabrali pol, boju i dodatak",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(rg.getCheckedRadioButtonId()==0){
+        if(rg.getCheckedRadioButtonId()==R.id.radioButton){
             pol="m";
         }else {
             pol="z";

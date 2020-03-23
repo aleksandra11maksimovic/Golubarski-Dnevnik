@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -42,6 +43,8 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
     ListView listView;
     MySQLiteHelper db;
     EditText etPretraga;
+    int selektovanPol;
+    Button poPolu;
 
     public GoluboviFragment() {
         // Required empty public constructor
@@ -70,6 +73,11 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_golubovi, container, false);
+
+        poPolu= view.findViewById(R.id.buttonPoPolu);
+        selektovanPol=0;
+        poPolu.setOnClickListener(this);
+
 
         etPretraga= view.findViewById(R.id.etpretraga2);
         etPretraga.addTextChangedListener(new TextWatcher() {
@@ -121,6 +129,23 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
             case R.id.imageButton4:
                 Intent intent= new Intent(getActivity(), DodajGoluba.class);
                 startActivity(intent);
+                break;
+            case R.id.buttonPoPolu:
+                if(selektovanPol==0){
+                    selektovanPol++;
+                    poPolu.setBackgroundResource(R.drawable.togglem);
+                    dajGolubove(" WHERE pol='m'");
+
+                } else if(selektovanPol==1){
+                    selektovanPol++;
+                    poPolu.setBackgroundResource(R.drawable.togglez);
+                    dajGolubove(" WHERE pol='z'");
+
+                }else{
+                    selektovanPol=0;
+                    poPolu.setBackgroundResource(R.drawable.togglesvi);
+                    dajGolubove(" ");
+                }
                 break;
 
         }
@@ -202,9 +227,12 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
     public void pretrazi(){
         String pretraga= etPretraga.getText().toString();
         String uslov= " WHERE id like '%"+pretraga+"%' OR bojaAlke like '%"+pretraga+"%' OR boja like '%"+pretraga+"%' OR dodatak like '%"+pretraga+"%'";
+        dajGolubove(uslov);
+
+    }
+    public void dajGolubove(String uslov){
         listaGolubova= new ArrayList<Golub>(db.dajSveGolubove(uslov));
         AdapterZaListView adapterZaListView=new AdapterZaListView(listaGolubova);
         listView.setAdapter(adapterZaListView);
-
     }
 }
