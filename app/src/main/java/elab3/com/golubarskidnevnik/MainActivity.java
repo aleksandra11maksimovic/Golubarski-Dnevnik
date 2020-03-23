@@ -25,12 +25,16 @@ import androidx.fragment.app.FragmentManager;
 import android.view.Menu;
 
 import elab3.com.golubarskidnevnik.Golubovi.GoluboviFragment;
+import elab3.com.golubarskidnevnik.Letovi.LetoviFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     final Fragment fragment1 = new GoluboviFragment();
+    final Fragment fragment2 = new LetoviFragment();
+    final Fragment fragment = new PocetniFragment();
+    Fragment aktivni;
     FragmentManager fm= getSupportFragmentManager();
 
     @Override
@@ -39,14 +43,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,7 +53,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        fm.beginTransaction().add(R.id.fragment, fragment1, "2").hide(fragment1).commit();
+        fm.beginTransaction().add(R.id.fragment, fragment1, "1").hide(fragment1).commit();
+        fm.beginTransaction().add(R.id.fragment, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.fragment, fragment, "0").commit();
+        aktivni= fragment;
+
     }
 
     @Override
@@ -95,14 +96,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            fm.beginTransaction().hide(aktivni).show(fragment).commit();
+            aktivni=fragment;
         } else if (id == R.id.nav_golubovi) {
-            fm.beginTransaction().show(fragment1).commit();
+            fm.beginTransaction().hide(aktivni).show(fragment1).commit();
+            aktivni=fragment1;
         } else if (id == R.id.nav_letovi) {
-
+            fm.beginTransaction().hide(aktivni).show(fragment2).commit();
+            aktivni=fragment2;
         } else if (id == R.id.nav_ekipe) {
 
         } else if (id == R.id.nav_share) {

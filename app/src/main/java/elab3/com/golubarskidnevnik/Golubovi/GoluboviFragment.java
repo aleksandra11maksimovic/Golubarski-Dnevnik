@@ -131,6 +131,7 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.buttonPoPolu:
+                etPretraga.setText("");
                 if(selektovanPol==0){
                     selektovanPol++;
                     poPolu.setBackgroundResource(R.drawable.togglem);

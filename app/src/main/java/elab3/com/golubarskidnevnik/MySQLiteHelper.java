@@ -28,12 +28,25 @@ public class MySQLiteHelper extends SQLiteOpenHelper
                 "ekipa INTEGER )";
 
         db.execSQL(sql);
+
+        sql="CREATE TABLE let(" +
+                "datum [datetime] PRIMARY KEY,\n" +
+                "pritisak [nchar](10)," +
+                "vetar [nchar](10) ," +
+                "vlaga [nchar](10) ," +
+                "temperatura [nchar](10)," +
+                "opis [nchar](100) ," +
+                "prosek [numeric](5, 2) " +
+                " )";
+
+        db.execSQL(sql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
         db.execSQL("DROP TABLE IF EXISTS golub");
+        db.execSQL("DROP TABLE IF EXISTS let");
         this.onCreate(db);
     }
 
@@ -61,7 +74,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
     public List<Golub> dajSveGolubove(String uslov) {
         List<Golub> golubovi = new LinkedList<>();
 
-        String query = "SELECT  * FROM golub" + uslov;
+        String query = "SELECT  * FROM golub" + uslov +" ORDER BY bojaAlke asc, id asc";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
