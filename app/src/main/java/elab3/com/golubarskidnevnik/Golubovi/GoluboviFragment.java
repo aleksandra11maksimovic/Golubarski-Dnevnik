@@ -1,8 +1,6 @@
 package elab3.com.golubarskidnevnik.Golubovi;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,16 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import elab3.com.golubarskidnevnik.AdapterZaListViewGolubova;
+import elab3.com.golubarskidnevnik.MainActivity;
 import elab3.com.golubarskidnevnik.MySQLiteHelper;
 import elab3.com.golubarskidnevnik.R;
 
@@ -37,7 +35,6 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
-    public static final int REQUEST_CODE_BRISANJE=1;
     ArrayList<Golub> listaGolubova;
     ImageButton add;
     ListView listView;
@@ -69,7 +66,7 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view=inflater.inflate(R.layout.fragment_golubovi, container, false);
@@ -102,20 +99,21 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
         db= new MySQLiteHelper(getActivity());
         listView= view.findViewById(R.id.listView);
         listaGolubova= new ArrayList<Golub>(db.dajSveGolubove(""));
-        AdapterZaListView adapterZaListView=new AdapterZaListView(listaGolubova);
+        AdapterZaListViewGolubova adapterZaListView=new AdapterZaListViewGolubova(getContext(),listaGolubova);
         listView.setAdapter(adapterZaListView);
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent= new Intent(getActivity(), ObrisiGoluba.class);
-                intent.putExtra("Golub", listaGolubova.get(i));
-                startActivityForResult(intent,REQUEST_CODE_BRISANJE);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent= new Intent(getActivity(),PomocniGolubovi.class);
+                intent.putExtra("Golub",listaGolubova.get(i));
+                startActivity(intent);
 
-                return true;
+
 
             }
         });
+
 
 
 
@@ -128,6 +126,7 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
         switch (view.getId()){
             case R.id.imageButton4:
                 Intent intent= new Intent(getActivity(), DodajGoluba.class);
+                intent.putExtra("intent","dodaj");
                 startActivity(intent);
                 break;
             case R.id.buttonPoPolu:
@@ -152,48 +151,6 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
         }
 
     }
-    public class AdapterZaListView extends BaseAdapter {
-
-
-        ArrayList<Golub> lg=new ArrayList<>();
-
-        public AdapterZaListView(ArrayList<Golub> lg) {
-            this.lg = lg;
-        }
-
-        @Override
-        public int getCount() {
-            return lg.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View view, ViewGroup viewGroup) {
-            //LayoutInflater inf= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //view=inf.inflate(R.layout.list_item,null);
-            view=getLayoutInflater().inflate(R.layout.list_item_golub,null);
-            TextView txtBrojAlke=view.findViewById(R.id.txtBrojAlke);
-            TextView txtBojaAlke=view.findViewById(R.id.txtBojaAlke);
-            TextView txtDodatak=view.findViewById(R.id.txtDodatak);
-            TextView txtBoja=view.findViewById(R.id.txtBoja);
-            txtBrojAlke.setText(lg.get(position).getBrojAlke());
-            txtBojaAlke.setText(lg.get(position).getBojaAlke());
-            txtBoja.setText(lg.get(position).getBoja());
-            txtDodatak.setText(lg.get(position).getDodatak());
-            return view;
-
-
-        }
-    }
 
 
     @Override
@@ -201,29 +158,13 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
         super.onResume();
         etPretraga.setText("");
         listaGolubova= new ArrayList<Golub>(db.dajSveGolubove(""));
-        AdapterZaListView adapterZaListView=new AdapterZaListView(listaGolubova);
+        AdapterZaListViewGolubova adapterZaListView=new AdapterZaListViewGolubova(getContext(),listaGolubova);
         listView.setAdapter(adapterZaListView);
 
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==REQUEST_CODE_BRISANJE){
-            if(resultCode>0){
-                Toast.makeText(getActivity(),"Uspešno obrisan golub",Toast.LENGTH_SHORT).show();
-
-            }
-            else if(resultCode<0){
-
-                Toast.makeText(getActivity(),"Brisanje nije uspelo",Toast.LENGTH_SHORT).show();
-            }
-        }
-
-
-    }
 
     public void pretrazi(){
         String pretraga= etPretraga.getText().toString();
@@ -233,7 +174,9 @@ public class GoluboviFragment extends Fragment implements View.OnClickListener{
     }
     public void dajGolubove(String uslov){
         listaGolubova= new ArrayList<Golub>(db.dajSveGolubove(uslov));
-        AdapterZaListView adapterZaListView=new AdapterZaListView(listaGolubova);
+        AdapterZaListViewGolubova adapterZaListView=new AdapterZaListViewGolubova(getContext(),listaGolubova);
         listView.setAdapter(adapterZaListView);
     }
+
+
 }

@@ -20,41 +20,31 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="6dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="6dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txtBrojAlke"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1"
-            android:text="TextView" />
 
         <TextView
-            android:id="@+id/txtBojaAlke"
+            android:id="@+id/txtRBr"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="0dp"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/txtBoja"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
 
-            android:layout_weight="1"
+            android:layout_weight="4"
             android:text="TextView" />
 
         <TextView
@@ -64,8 +54,35 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="0dp"
+            android:layout_weight="4"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/txtBrojAlke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="4"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/txtBojaAlke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="4"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/txtEkipa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
+
 
     </LinearLayout>
 

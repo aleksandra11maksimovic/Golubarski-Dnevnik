@@ -7,13 +7,25 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import elab3.com.golubarskidnevnik.AdapterZaListViewLetovi;
 import elab3.com.golubarskidnevnik.Golubovi.DodajGoluba;
+import elab3.com.golubarskidnevnik.MainActivity;
+import elab3.com.golubarskidnevnik.MySQLiteHelper;
 import elab3.com.golubarskidnevnik.R;
 
 
@@ -23,9 +35,14 @@ public class LetoviFragment extends Fragment implements View.OnClickListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private ArrayList<Let> letovi= new ArrayList<>();
+
+    private ListView listViewLetovi;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private AdapterZaListViewLetovi adapterZaListViewLetovi;
 
 
     public LetoviFragment() {
@@ -62,6 +79,16 @@ public class LetoviFragment extends Fragment implements View.OnClickListener {
         dodaj= view.findViewById(R.id.buttonLetAdd);
         dodaj.setOnClickListener(this);
 
+        MySQLiteHelper db= new MySQLiteHelper(getActivity());
+
+        letovi= db.dajSveLetove("");
+       // Collections.sort(letovi);
+        listViewLetovi= view.findViewById(R.id.listViewLetovi);
+        adapterZaListViewLetovi= new AdapterZaListViewLetovi(getContext(),letovi,"svi");
+        listViewLetovi.setAdapter(adapterZaListViewLetovi);
+
+
+
 
 
 
@@ -80,4 +107,30 @@ public class LetoviFragment extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    @Override
+    public void onResume() {
+        MySQLiteHelper db= new MySQLiteHelper(getActivity());
+//        Collections.sort(letovi);
+        letovi=db.dajSveLetove("");
+        adapterZaListViewLetovi.setLl(letovi);
+        adapterZaListViewLetovi.notifyDataSetChanged();
+        super.onResume();
+    }
 }
+
+       /*
+                MySQLiteHelper db= new MySQLiteHelper(getContext());
+                for (GoluboviULetu g:letovi.get(i).getGoluboviULetu()
+                ) {
+                    db.obrisiElement("goluboviULetu","idLeta",letovi.get(i).getDatum());
+
+
+                }
+                db.obrisiElement("let","datum",letovi.get(i).getDatum());
+                db.close();
+
+
+                return true;
+            }
+        });*/

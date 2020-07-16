@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
 
+import elab3.com.golubarskidnevnik.Ekipe.EkipeFragment;
 import elab3.com.golubarskidnevnik.Golubovi.GoluboviFragment;
 import elab3.com.golubarskidnevnik.Letovi.LetoviFragment;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
     final Fragment fragment1 = new GoluboviFragment();
     final Fragment fragment2 = new LetoviFragment();
-    final Fragment fragment = new PocetniFragment();
+    final Fragment fragment3=new EkipeFragment();
     Fragment aktivni;
     FragmentManager fm= getSupportFragmentManager();
 
@@ -53,10 +54,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        fm.beginTransaction().add(R.id.fragment, fragment1, "1").hide(fragment1).commit();
         fm.beginTransaction().add(R.id.fragment, fragment2, "2").hide(fragment2).commit();
-        fm.beginTransaction().add(R.id.fragment, fragment, "0").commit();
-        aktivni= fragment;
+        fm.beginTransaction().add(R.id.fragment, fragment3, "3").hide(fragment3).commit();
+
+        fm.beginTransaction().add(R.id.fragment, fragment1, "1").commit();
+        aktivni= fragment1;
 
     }
 
@@ -99,17 +101,15 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            fm.beginTransaction().hide(aktivni).show(fragment).commit();
-            aktivni=fragment;
-        } else if (id == R.id.nav_golubovi) {
+       if (id == R.id.nav_golubovi) {
             fm.beginTransaction().hide(aktivni).show(fragment1).commit();
             aktivni=fragment1;
         } else if (id == R.id.nav_letovi) {
             fm.beginTransaction().hide(aktivni).show(fragment2).commit();
             aktivni=fragment2;
         } else if (id == R.id.nav_ekipe) {
-
+            fm.beginTransaction().hide(aktivni).show(fragment3).commit();
+            aktivni=fragment3;
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

@@ -4,12 +4,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_ikonica"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Letovi.DodajLet"></activity>
+        <activity android:name=".Letovi.IzmenaLeta"></activity>
+        <activity android:name=".Golubovi.PrikazGoluba" />
+        <activity
+            android:name=".Golubovi.PomocniGolubovi"
+            android:label="Izaberite opciju"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity android:name=".Letovi.PrikazLeta" />
+        <activity android:name=".Letovi.DodajLet" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -22,10 +29,16 @@
         </activity>
         <activity
             android:name=".Golubovi.DodajGoluba"
-            android:theme="@style/Golubovi"></activity>
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
+            android:name=".Letovi.PomocniGoluboviULetuBrisanje"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".Golubovi.ObrisiGoluba"
-            android:theme="@style/Golubovi" />
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
+            android:name=".Letovi.DodajGoluboviULetu"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
     </application>
 
 </manifest>
